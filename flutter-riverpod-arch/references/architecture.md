@@ -140,7 +140,6 @@ features/post/
 | Repositories | `NounRepository` | `PostRepository` |
 | Use Cases | `VerbNoun` | `FetchPosts`, `CreatePost`, `DeletePost` |
 | Controllers | `NounController` | `PostController` |
-| Providers (generated) | `nounProvider` | `postRepositoryProvider`, `fetchPostsProvider` |
 
 ## Performance Guidelines
 
