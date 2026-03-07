@@ -11,7 +11,7 @@ metadata:
 
 ## Goal
 
-Implements scalable Flutter applications using the Feature-First directory structure, Riverpod (with code generation) for state management, and `flutter_hooks` / `HookConsumerWidget` for UI composition. Organizes code into four layers — UI, Use Case, Repository, and Data Source — enforcing unidirectional data flow. Applies `@Riverpod(keepAlive: true)` for global/repository providers and `@riverpod` for screen-scoped state.
+Implements scalable Flutter applications using the Feature-First directory structure, Riverpod (with code generation) for state management, and `flutter_hooks` / `HookConsumerWidget` for UI composition. The design philosophy is three layers — presentation, domain, and infrastructure — and the code-level notation in this skill is UI, UseCase, and Repository. Data source access is encapsulated inside repositories. Applies `@Riverpod(keepAlive: true)` for repository providers and `@riverpod` for screen-scoped state.
 
 ## Decision Logic
 
@@ -23,24 +23,27 @@ Before implementing, evaluate the following to determine the correct approach:
   - _Yes_ → Use `@Riverpod(keepAlive: true)`
   - _No_ → Use `@riverpod` (auto-disposed when no longer watched)
 
-**Repository vs. Use Case**
+**UseCase vs. Repository** (domain/infrastructure mapping)
 
 - Does the operation simply read/write a single data source with no business rules?
-  - _Yes_ → Implement directly in the Repository; the UI provider calls the repository directly.
-- Does the operation combine multiple repositories, require validation, or orchestrate a multi-step process?
-  - _Yes_ → Create a dedicated Use Case class inside `providers/`.
+  - _Yes_ → Implement in the Repository.
+- Does the operation combine repositories, require validation, or orchestrate a multi-step process?
+  - _Yes_ → Create a dedicated UseCase.
 
 **Feature vs. Core placement**
 
-- Is the provider / repository used by only one feature?
+- Is the use case/repository implementation used by only one feature?
   - _Yes_ → Place in `features/{feature}/providers/`
   - _No_ → Place in `core/providers/`
 
-**Directory structure within `providers/`**
+**Directory structure policy**
 
-- Fewer than ~5 files in a feature's `providers/`?
-  - _Yes_ → Keep flat (repository + use cases together).
-  - _No_ → Split into `providers/repositories/` and `providers/use_cases/` subdirectories.
+- Default: keep both layers under `providers/` and split by responsibility:
+  - `providers/use_cases/` for UseCase/controller implementations
+  - `providers/repositories/` for Repository/data access implementations
+- If this is unclear for the team, you may use explicit directory names:
+  - `usecases/` (or `domain/`)
+  - `repositories/` (or `infrastructures/`)
 
 ## Instructions
 
@@ -55,23 +58,25 @@ Place code according to this structure:
 ```
 lib/
   core/
-    providers/       # Shared repositories and providers across features
+    providers/       # Shared UseCase + Repository implementations
     widgets/         # Reusable widgets
     extensions/      # Extension methods
     res/             # Colors, text styles, theme
   features/
     {feature}/
-      providers/     # Repositories and use cases for this feature
+      providers/
+        use_cases/      # UseCase, controllers
+        repositories/   # Repository, data access
       pages/
         widgets/     # Page-specific widgets
       {feature}_page.dart
 ```
 
-_Validate-and-Fix:_ Confirm that no provider is placed inside `pages/`. Confirm that shared providers live in `core/providers/`, not duplicated across features.
+_Validate-and-Fix:_ Confirm that no UseCase/Repository implementation is placed inside `pages/`. Confirm that shared implementations live in `core/providers/` (or explicit `core/usecases` / `core/repositories`), not duplicated across features.
 
 ---
 
-### 2. Implement the Data Layer: Repository
+### 2. Implement the Repository Layer
 
 Create a repository class that encapsulates all access to a single data source (API, local DB). Annotate its provider with `@Riverpod(keepAlive: true)`. After adding annotations, run code generation:
 
@@ -85,9 +90,9 @@ _Validate-and-Fix:_ Confirm the repository contains no business logic (no valida
 
 ---
 
-### 3. Implement Business Logic: Use Cases
+### 3. Implement the UseCase Layer
 
-For operations that involve validation, multi-step orchestration, or combining repositories, create a dedicated Use Case class inside `providers/`. Three patterns:
+For operations that involve validation, multi-step orchestration, or combining repositories, create a dedicated UseCase class inside `providers/use_cases/` (or `usecases/`). Three patterns:
 
 - **Async data fetcher** — `class FetchPosts extends _$FetchPosts` with `Future<T> build()`
 - **Action use case (callable class)** — `CreatePost` with `call()` for commands; invalidate dependent providers after writes

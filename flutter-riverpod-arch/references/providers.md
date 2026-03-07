@@ -1,15 +1,15 @@
-# Provider Directory: Code Design and Implementation Rules
+# UI/UseCase/Repository Implementation Rules
 
 ## 1. Architecture Layers
 
 ```
 UI Layer          →  HookConsumerWidget, pages, widgets
-Use Case Layer    →  Business logic inside provider classes
-Repository Layer  →  Data source abstraction
-Data Source Layer →  API clients, local databases
+UseCase Layer     →  Use cases, controllers, business orchestration
+Repository Layer  →  Repositories and data access (encapsulates API clients/local DB)
 ```
 
-Data flows strictly downward: UI → Use Case → Repository → Data Source.
+Design mapping: Presentation = UI, Domain = UseCase, Infrastructure = Repository.
+Data flows strictly downward: UI → UseCase → Repository.
 
 ## 2. Directory Structure
 
@@ -17,19 +17,27 @@ Data flows strictly downward: UI → Use Case → Repository → Data Source.
 lib/
 ├── core/providers/         # Shared across features
 │   ├── auth/
-│   │   ├── auth_repository.dart
-│   │   └── sign_in.dart
+│   │   ├── use_cases/
+│   │   │   └── sign_in.dart
+│   │   └── repositories/
+│   │       └── auth_repository.dart
 │   └── storage/
-│       └── preferences_repository.dart
+│       └── repositories/
+│           └── preferences_repository.dart
 ├── features/
 │   ├── post/
 │   │   ├── providers/      # Post-specific logic
-│   │   │   ├── post_repository.dart
-│   │   │   ├── fetch_posts.dart
-│   │   │   └── create_post.dart
+│   │   │   ├── use_cases/
+│   │   │   │   ├── fetch_posts.dart
+│   │   │   │   └── create_post.dart
+│   │   │   └── repositories/
+│   │   │       └── post_repository.dart
 │   │   └── pages/
 │   └── ...
 ```
+
+If `providers/` is ambiguous for your team, it is acceptable to use explicit directories:
+`features/{feature}/usecases/` (or `domain/`) and `features/{feature}/repositories/` (or `infrastructures/`).
 
 ## 3. Repository Implementation
 
@@ -179,11 +187,9 @@ dart run build_runner watch
 ```
 UI Layer
   ↓
-Use Case Layer
+UseCase Layer
   ↓
 Repository Layer
-  ↓
-Data Source Layer
 ```
 
 - Upper layers depend on lower layers; never the reverse.

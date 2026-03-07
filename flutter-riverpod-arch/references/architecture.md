@@ -2,7 +2,9 @@
 
 ## Overview
 
-- Four-layer architecture: UI → Use Case → Repository → Data Source
+- Three-layer design philosophy: Presentation → Domain → Infrastructure
+- Code-level notation in this skill: UI → UseCase → Repository
+- Data Source is encapsulated inside Infrastructure repositories
 - Feature-First directory structure
 - Riverpod for state management
 - Hooks-based widget composition (`HookConsumerWidget`)
@@ -14,13 +16,13 @@ lib/
   core/
     constants/        // App-wide constants
     extensions/       // Extension methods
-    providers/        // Shared providers and repositories
+    providers/        // Shared UseCase + Repository implementations
     res/              // Resources (colors, text styles, theme)
     utils/            // Utility functions
     widgets/          // Shared widgets
   features/
     {feature}/        // One directory per feature
-      providers/      // Business logic and repositories for this feature
+      providers/      // UseCase + Repository for this feature
       pages/
         widgets/      // Page-specific widgets
       {feature}_page.dart
@@ -29,32 +31,35 @@ test/
   widget/
 ```
 
-### The `providers/` Directory
+### The `providers/` Directory (Default)
 
-Both business logic (use cases) and repository implementations live inside `providers/`.
-Use subdirectories when the file count grows.
+Manage both UseCase and Repository implementations inside `providers/` by default.
+Split by responsibility.
 
 **Flat layout (few files):**
 
 ```
 features/post/providers/
-  post_repository.dart
-  fetch_posts.dart
-  create_post.dart
-  delete_post.dart
-```
-
-**Subdirectory layout (many files):**
-
-```
-features/post/providers/
-  repositories/
-    post_repository.dart
   use_cases/
     fetch_posts.dart
     create_post.dart
     delete_post.dart
-  post_controller.dart    // UI-facing state controller
+  repositories/
+    post_repository.dart
+```
+
+**Detailed layout (many files):**
+
+```
+features/post/providers/
+  use_cases/
+    fetch_posts.dart
+    create_post.dart
+    delete_post.dart
+    post_controller.dart    // UI-facing state controller
+  repositories/
+    post_repository.dart
+    post_remote_data_source.dart
 ```
 
 **`core/providers/` (shared across features):**
@@ -62,11 +67,27 @@ features/post/providers/
 ```
 core/providers/
   auth/
-    auth_repository.dart
-    sign_in.dart
-    sign_out.dart
+    use_cases/
+      sign_in.dart
+      sign_out.dart
+    repositories/
+      auth_repository.dart
   storage/
-    preferences_repository.dart
+    repositories/
+      preferences_repository.dart
+```
+
+### Alternative Directory Names (Optional)
+
+If `providers` is unclear for your team, you may use explicit directories instead:
+
+```
+features/post/
+  usecases/            // or domain/
+    fetch_posts.dart
+    create_post.dart
+  repositories/        // or infrastructures/
+    post_repository.dart
 ```
 
 ## State Management Guidelines
@@ -91,10 +112,12 @@ core/providers/
 
 ## Provider Guidelines
 
-1. Place providers in `features/{feature}/providers/` (feature-specific) or `core/providers/` (shared).
-2. Use subdirectories when `providers/` contains more than ~5 files.
-3. Implement error handling in every async provider.
-4. Follow the single-responsibility principle: one provider manages one piece of state.
+1. Design philosophy: `presentation + domain + infrastructure`.
+2. Code-level notation: `UI + UseCase + Repository`.
+3. Default layout: place UseCase/Repository implementations in `features/{feature}/providers/` and `core/providers/`.
+4. Optional layout: replace `providers/` with explicit `usecases/` (or `domain/`) and `repositories/` (or `infrastructures/`).
+5. Keep each file focused on a single responsibility.
+6. Implement error handling in every async provider.
 
 ## Feature Organization
 
