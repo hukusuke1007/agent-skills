@@ -123,7 +123,7 @@ _Validate-and-Fix:_ Confirm that `ref.watch()` is never called inside event hand
 
 ### 5. Implement Responsive Layout
 
-Use `ResponsiveLayout` for page-level breakpoints based on `MediaQuery.sizeOf(context)`. Treat tablet and macOS as the same layout tier. Use `LayoutBuilder` only for widget-level (not page-level) breakpoints.
+Use `ResponsiveLayout` for page-level breakpoints based on `MediaQuery.sizeOf(context)`. Treat tablet and desktop platforms as the same layout tier. Use `LayoutBuilder` only for widget-level (not page-level) breakpoints.
 
 See **[responsive.md](references/ui/responsive.md)** for breakpoints, `ResponsiveLayout` implementation, and platform-specific patterns.
 
@@ -148,7 +148,7 @@ _Validate-and-Fix:_ Confirm that every test overrides all external dependencies 
 - **No `ref.watch()` in event handlers:** `ref.watch()` must only appear inside `build()` or a provider's `build()` method.
 - **No business logic in Views:** Widget classes must contain only layout, conditional rendering, and navigation. All data transformation and validation must reside in Use Cases or Repositories.
 - **No `SingleChildScrollView + Column` for dynamic lists:** Always use `ListView.builder` (or `SliverList` inside `CustomScrollView`) for lists of dynamic length.
-- **No button wrapper widgets:** Never create a custom wrapper widget for a single button purpose. Configure appearance via `styleFrom` or a shared `AppButtonStyle` utility class.
+- **Avoid button wrapper widgets for style only:** Do not create a custom wrapper widget whose sole purpose is applying a fixed button style. If you need to encapsulate behavior such as loading state or submission flow, a wrapper is acceptable.
 - **Use targeted `MediaQuery` static methods:** Prefer `MediaQuery.sizeOf`, `MediaQuery.paddingOf`, `MediaQuery.orientationOf` etc. over `MediaQuery.of(context)` to avoid unnecessary rebuilds.
 - **No `LayoutBuilder` for page-level breakpoints:** Use `ResponsiveLayout` (which uses `MediaQuery.sizeOf`) so the layout decision is based on actual screen width, not parent constraints.
 - **Mouse cursors required on macOS/Web:** Every `Button` variant must include `enabledMouseCursor: SystemMouseCursors.click`. Every `InkWell` must include `mouseCursor: SystemMouseCursors.click`.

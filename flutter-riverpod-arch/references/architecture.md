@@ -77,7 +77,7 @@ core/providers/
       preferences_repository.dart
 ```
 
-### Alternative Directory Names (Optional)
+### Conceptual Layer Names
 
 If `providers` is unclear for your team, you may explain the same concepts with explicit layer names instead. The recommended actual directory names in this skill remain `use_cases` and `repositories`.
 

@@ -11,7 +11,7 @@ Use `width` as the primary signal for page-level layout decisions. Use `shortest
 | Tier            | Condition             | Layout                               |
 | --------------- | --------------------- | ------------------------------------ |
 | Phone           | `width < 600`         | `BottomNavigationBar`, single-column |
-| Tablet / macOS  | `width >= 600`        | Side menu, two-column layout         |
+| Tablet / desktop | `width >= 600`       | Side menu, two-column layout         |
 | Compact sidebar | `width <= 1000`       | Switch side menu to `Drawer`         |
 
 ## `ResponsiveLayout` Widget
