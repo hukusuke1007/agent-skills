@@ -95,11 +95,10 @@ void main() {
           ),
         ],
       );
-      final state = await container.read(fetchPostsProvider.future).then(
-            (_) => null,
-            onError: (e) => e,
-          );
-      expect(state, isA<Exception>());
+      await expectLater(
+        container.read(fetchPostsProvider.future),
+        throwsA(isA<Exception>()),
+      );
     });
   });
 }
