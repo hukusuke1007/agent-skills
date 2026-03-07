@@ -23,121 +23,57 @@ Implements scalable Flutter applications using the Feature-First directory struc
 
 ## Decision Logic
 
-Before implementing, evaluate the following to determine the correct approach:
+Decide whether the task belongs in UI, UseCase, or Repository, whether it is feature-specific or shared, and which Riverpod scope is appropriate.
 
-**Provider scope**
-
-- Does the state need to persist across screen navigations, or is it a repository / auth state shared across features?
-  - _Yes_ → Use `@Riverpod(keepAlive: true)`
-  - _No_ → Use `@riverpod` (auto-disposed when no longer watched)
-
-**UseCase vs. Repository** (domain/infrastructure mapping)
-
-- Does the operation simply read/write a single data source with no business rules?
-  - _Yes_ → Implement in the Repository.
-- Does the operation combine repositories, require validation, or orchestrate a multi-step process?
-  - _Yes_ → Create a dedicated UseCase.
-
-**Feature vs. Core placement**
-
-- Is the use case/repository implementation used by only one feature?
-  - _Yes_ → Place in `features/{feature}/providers/`
-  - _No_ → Place in `core/providers/`
-
-**Directory structure policy**
-
-- Default: keep both layers under `providers/` and split by responsibility:
-  - `providers/use_cases/` for UseCase/controller implementations
-  - `providers/repositories/` for Repository/data access implementations
-- Recommended names in this skill are `use_cases` and `repositories`.
-- Alternative names (`domain`, `infrastructures`) are also acceptable.
+See **[architecture.md](references/architecture.md)** for structure and naming, **[providers.md](references/providers.md)** for Repository/UseCase placement, and **[riverpod.md](references/riverpod.md)** for provider scope rules.
 
 ## Instructions
 
 ### 1. Plan the Feature Structure
 
-Identify the feature module, the providers required, and the correct layer for each piece of logic.
+Identify the feature, confirm whether the implementation is shared or feature-local, and place files in the correct layer before coding.
 
-**STOP AND ASK THE USER:** "Which feature does this belong to? Is the data source a remote API, local database, or both? Does the logic require combining multiple data sources or complex validation that warrants a dedicated Use Case?"
-
-Place code according to this structure:
-
-```
-lib/
-  core/
-    providers/       # Shared UseCase + Repository implementations
-    widgets/         # Reusable widgets
-    extensions/      # Extension methods
-    res/             # Colors, text styles, theme
-  features/
-    {feature}/
-      providers/
-        use_cases/      # UseCase, controllers
-        repositories/   # Repository, data access
-      pages/
-        widgets/     # Page-specific widgets
-      {feature}_page.dart
-```
-
-_Validate-and-Fix:_ Confirm that no UseCase/Repository implementation is placed inside `pages/`. Confirm that shared implementations live in `core/providers/` (or explicit `core/use_cases` / `core/repositories`), not duplicated across features.
+See **[architecture.md](references/architecture.md)** for directory structure and naming.
 
 ---
 
 ### 2. Implement the Repository Layer
 
-Create a repository class that encapsulates all access to a single data source (API, local DB). Annotate its provider with `@Riverpod(keepAlive: true)`. After adding annotations, run code generation:
+Implement Repository code in the Repository layer and follow the Riverpod/provider rules for Repository providers.
 
-```bash
-dart run build_runner build
-```
-
-See **[providers.md](references/providers.md)** for the full implementation pattern.
-
-_Validate-and-Fix:_ Confirm the repository contains no business logic (no validation, no multi-source orchestration). Confirm the provider function returns only the repository instance, and that `@Riverpod(keepAlive: true)` is used (not `@riverpod`).
+See **[providers.md](references/providers.md)** for Repository implementation details and **[riverpod.md](references/riverpod.md)** for provider scope rules.
 
 ---
 
 ### 3. Implement the UseCase Layer
 
-For operations that involve validation, multi-step orchestration, or combining repositories, create a dedicated UseCase class inside `providers/use_cases/` (alternative: `domain/`). Three patterns:
+Implement UseCase code in the UseCase layer for validation, orchestration, and UI-facing state changes.
 
-- **Async data fetcher** — `class FetchPosts extends _$FetchPosts` with `Future<T> build()`
-- **Action use case (callable class)** — `CreatePost` with `call()` for commands; invalidate dependent providers after writes
-- **Stateful controller** — `class PostController extends _$PostController` for screen-scoped UI state
-
-See **[providers.md](references/providers.md)** for full implementation patterns.
-
-_Validate-and-Fix:_ Confirm each use case handles only one responsibility. Confirm that `ref.invalidate()` is called after mutations to keep dependent providers fresh. Confirm `@riverpod` (not `keepAlive`) is used for screen-scoped use cases.
+See **[providers.md](references/providers.md)** for UseCase patterns and **[riverpod.md](references/riverpod.md)** for provider scope rules.
 
 ---
 
 ### 4. Build the UI with HookConsumerWidget
 
-Extend `HookConsumerWidget` for all stateful pages and complex widgets. Use hooks (`useScrollController`, `useTextEditingController`, etc.) for local UI state. Provide a static `show()` method for type-safe navigation. When using a declarative router (GoRouter, auto_route), replace `show()` with the router's push API.
+Build UI in the Presentation layer using the patterns required by this skill.
 
-See **[presentation.md](references/presentation.md)** for page structure and hooks patterns. For mouse cursor requirements on macOS/Web see **[button.md](references/ui/button.md)**.
-
-_Validate-and-Fix:_ Confirm that `ref.watch()` is never called inside event handlers (`onPressed`, `onTap`, etc.). Confirm that `ref.read()` is never called at the top of `build()` to derive reactive state. Confirm `HookConsumerWidget` is used for all stateful pages and complex widgets. Confirm macOS/Web interactive widgets include `enabledMouseCursor` or `mouseCursor`.
+See **[presentation.md](references/presentation.md)** for page and widget structure, **[riverpod.md](references/riverpod.md)** for `ref.watch` / `ref.read`, and **[button.md](references/ui/button.md)** for button and cursor rules.
 
 ---
 
 ### 5. Implement Responsive Layout
 
-Use `ResponsiveLayout` for page-level breakpoints based on `MediaQuery.sizeOf(context)`. Treat tablet and desktop platforms as the same layout tier. Use `LayoutBuilder` only for widget-level (not page-level) breakpoints.
+Apply the responsive layout rules defined for this skill.
 
-See **[responsive.md](references/ui/responsive.md)** for breakpoints, `ResponsiveLayout` implementation, and platform-specific patterns.
-
-_Validate-and-Fix:_ Confirm that `LayoutBuilder` is not used for page-level breakpoint decisions. Confirm that targeted `MediaQuery` static methods (`MediaQuery.sizeOf`, `MediaQuery.paddingOf`, `MediaQuery.orientationOf`) are used instead of `MediaQuery.of(context)` to avoid unnecessary rebuilds.
+See **[responsive.md](references/ui/responsive.md)** for breakpoint policy and responsive layout patterns.
 
 ---
 
 ### 6. Write Tests
 
-Use `ProviderContainer` with overrides to test providers and use cases in isolation. Define a `createContainer` helper in `test/utils.dart`. Use `mockito` for mocking external dependencies.
+Test Repository, UseCase, controller, and widget behavior with the testing patterns used by this skill.
 
-See **[testing.md](references/testing.md)** for full test patterns (repository, use case, controller, widget tests).
-
-_Validate-and-Fix:_ Confirm that every test overrides all external dependencies (API clients, databases). Confirm that `addTearDown(container.dispose)` is called for every `ProviderContainer`. Confirm widget tests use `ProviderScope` with overrides rather than calling real repositories.
+See **[testing.md](references/testing.md)** for test structure, overrides, and fake/mock patterns.
 
 ---
 
@@ -147,7 +83,7 @@ _Validate-and-Fix:_ Confirm that every test overrides all external dependencies 
 - **No `ref.read()` in `build`:** `ref.read()` must only appear inside event handlers or callbacks, never at the top of a `build` method to derive reactive UI state.
 - **No `ref.watch()` in event handlers:** `ref.watch()` must only appear inside `build()` or a provider's `build()` method.
 - **No business logic in Views:** Widget classes must contain only layout, conditional rendering, and navigation. All data transformation and validation must reside in Use Cases or Repositories.
-- **No `SingleChildScrollView + Column` for dynamic lists:** Always use `ListView.builder` (or `SliverList` inside `CustomScrollView`) for lists of dynamic length.
+- **List patterns:** Follow the list and sliver rules defined in **[list.md](references/ui/list.md)**.
 - **Avoid button wrapper widgets for style only:** Do not create a custom wrapper widget whose sole purpose is applying a fixed button style. If you need to encapsulate behavior such as loading state or submission flow, a wrapper is acceptable.
 - **Use targeted `MediaQuery` static methods:** Prefer `MediaQuery.sizeOf`, `MediaQuery.paddingOf`, `MediaQuery.orientationOf` etc. over `MediaQuery.of(context)` to avoid unnecessary rebuilds.
 - **No `LayoutBuilder` for page-level breakpoints:** Use `ResponsiveLayout` (which uses `MediaQuery.sizeOf`) so the layout decision is based on actual screen width, not parent constraints.
