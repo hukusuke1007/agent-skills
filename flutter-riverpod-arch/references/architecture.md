@@ -111,10 +111,10 @@ features/post/
 
 ## Provider Guidelines
 
-1. Design philosophy: `presentation + domain + infrastructure`.
+1. Design philosophy: `Presentation + Domain + Infrastructure`.
 2. Code-level notation: `UI + UseCase + Repository`.
 3. Default layout: place UseCase/Repository implementations in `features/{feature}/providers/` and `core/providers/`.
-4. Optional explanation terms: `domain` and `infrastructures` may be used as conceptual layer names, while actual directory names remain `use_cases` and `repositories`.
+4. Optional explanation terms: `Domain` and `Infrastructures` may be used as conceptual layer names, while actual directory names remain `use_cases` and `repositories`.
 5. Keep each file focused on a single responsibility.
 6. Implement error handling in every async provider.
 
@@ -151,4 +151,4 @@ features/post/
 
 ## Model Layer
 
-Model / domain classes (e.g., `Post`, `User`) are within the scope of this skill. Prefer immutable models with `fromJson` / `toJson`. Recommended approaches are `freezed`, or hand-written immutable classes combined with `equatable`. Choose the approach that best fits the project and keep the model style consistent across the codebase.
+Model / domain classes (e.g., `Post`, `User`) should follow the same architectural conventions as the rest of the project. Prefer immutable models with `fromJson` / `toJson`. Recommended approaches are `freezed`, or hand-written immutable classes combined with `equatable`. Choose the approach that best fits the project and keep the model style consistent across the codebase.

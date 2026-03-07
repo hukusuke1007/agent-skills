@@ -11,15 +11,15 @@ metadata:
 
 ## Goal
 
-Implements scalable Flutter applications using the Feature-First directory structure, Riverpod (with code generation) for state management, and `flutter_hooks` / `HookConsumerWidget` for UI composition. The design philosophy is three layers — presentation, domain, and infrastructure — and the code-level notation in this skill is UI, UseCase, and Repository. Data source access is encapsulated inside repositories. Applies `@Riverpod(keepAlive: true)` for repository providers and `@riverpod` for screen-scoped state.
+Implements scalable Flutter applications using the Feature-First directory structure, Riverpod (with code generation) for state management, and `flutter_hooks` / `HookConsumerWidget` for UI composition. The design philosophy is three layers — Presentation, Domain, and Infrastructure — and the code-level notation in this skill is UI, UseCase, and Repository. Data source access is encapsulated inside repositories. Applies `@Riverpod(keepAlive: true)` for repository providers and `@riverpod` for screen-scoped state.
 
 ### Layer Mapping (Source of Truth)
 
 | Design philosophy | Code-level notation |
 | --- | --- |
-| presentation | UI |
-| domain | UseCase |
-| infrastructure | Repository |
+| Presentation | UI |
+| Domain | UseCase |
+| Infrastructure | Repository |
 
 ## Decision Logic
 

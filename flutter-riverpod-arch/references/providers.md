@@ -1,15 +1,14 @@
-# UI/UseCase/Repository Implementation Rules
+# Providers Implementation Rules
 
 ## 1. Architecture Layers
 
 ```
-UI Layer          →  HookConsumerWidget, pages, widgets
 UseCase Layer     →  Use cases, controllers, business orchestration
 Repository Layer  →  Repositories and data access (encapsulates API clients/local DB)
 ```
 
-Design mapping: Presentation = UI, Domain = UseCase, Infrastructure = Repository.
-Data flows strictly downward: UI → UseCase → Repository.
+Design mapping: Domain = UseCase, Infrastructure = Repository.
+Data flows strictly downward: UseCase → Repository.
 
 ## 2. Directory Structure
 
@@ -181,16 +180,3 @@ dart run build_runner build
 # Watch for changes
 dart run build_runner watch
 ```
-
-## 6. Module Dependencies
-
-```
-UI Layer
-  ↓
-UseCase Layer
-  ↓
-Repository Layer
-```
-
-- Upper layers depend on lower layers; never the reverse.
-- Avoid circular dependencies between providers.
