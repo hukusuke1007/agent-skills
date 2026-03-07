@@ -2,7 +2,7 @@
 
 ## Overview
 
-Use Material button components (`FilledButton`, `OutlinedButton`, `TextButton`). Configure appearance via `styleFrom` or a shared `AppButtonStyle` utility class. Never create a wrapper widget for a single button purpose.
+Use Material button components (`FilledButton`, `OutlinedButton`, `TextButton`). Configure appearance via `styleFrom` or a shared `AppButtonStyle` utility class. Avoid creating a wrapper widget for a single button purpose unless there is a concrete reason such as encapsulating loading state, async submission flow, or repeated interaction logic.
 
 ## macOS / Web: Mouse Cursor (Required)
 
@@ -209,7 +209,7 @@ class SubmitButton extends HookWidget {
 
 ## Best Practices
 
-1. **No wrapper widgets:** Never create a widget whose sole purpose is wrapping a button with a fixed style.
+1. **Avoid wrapper widgets for style only:** Do not create a wrapper widget whose sole purpose is applying a fixed button style. If you need to encapsulate behavior such as loading state or submission flow, a wrapper is acceptable as an exception.
 2. **Mouse cursor always set:** Every button must include `enabledMouseCursor: SystemMouseCursors.click` for macOS/Web.
 3. **Disable during loading:** Set `onPressed: null` while async work is in progress to prevent double submission.
 4. **Choose the correct type:** `FilledButton` for primary actions, `OutlinedButton` for secondary, `TextButton` for low-emphasis.

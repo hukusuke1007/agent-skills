@@ -79,14 +79,14 @@ core/providers/
 
 ### Alternative Directory Names (Optional)
 
-If `providers` is unclear for your team, you may use explicit directories instead:
+If `providers` is unclear for your team, you may explain the same concepts with explicit layer names instead. The recommended actual directory names in this skill remain `use_cases` and `repositories`.
 
 ```
 features/post/
-  usecases/            // or domain/
+  use_cases/           // conceptually: domain
     fetch_posts.dart
     create_post.dart
-  repositories/        // or infrastructures/
+  repositories/        // conceptually: infrastructures
     post_repository.dart
 ```
 
@@ -115,7 +115,7 @@ features/post/
 1. Design philosophy: `presentation + domain + infrastructure`.
 2. Code-level notation: `UI + UseCase + Repository`.
 3. Default layout: place UseCase/Repository implementations in `features/{feature}/providers/` and `core/providers/`.
-4. Optional layout: replace `providers/` with explicit `usecases/` (or `domain/`) and `repositories/` (or `infrastructures/`).
+4. Optional explanation terms: `domain` and `infrastructures` may be used as conceptual layer names, while actual directory names remain `use_cases` and `repositories`.
 5. Keep each file focused on a single responsibility.
 6. Implement error handling in every async provider.
 

@@ -171,7 +171,7 @@ SliverList(
 ```dart
 SliverGrid(
   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-    crossAxisCount: 3, // adjust based on MediaQuery.sizeOf(context).shortestSide
+    crossAxisCount: 3, // adjust based on available width or item density needs
     mainAxisSpacing: 4,
     crossAxisSpacing: 4,
   ),
@@ -206,7 +206,7 @@ CustomScrollView(
 
 1. **`ListView.builder` for all dynamic lists.** Never use `SingleChildScrollView + Column` for lists of unknown length.
 2. **Use `SliverList` / `SliverGrid` inside `CustomScrollView`** when combining multiple scrollable sections or implementing Pull-to-Refresh.
-3. **Responsive grid column counts:** Base `crossAxisCount` on `MediaQuery.sizeOf(context).shortestSide`.
+3. **Responsive grid column counts:** Prefer available `width` for page-level layout decisions. Use `shortestSide` only as a secondary signal when grid density should follow coarse device size rather than exact window width.
 4. **Prevent duplicate load requests:** Gate on `isLoadingMore.value` before triggering pagination.
 5. **Check `context.mounted`** before updating state after any async operation.
 

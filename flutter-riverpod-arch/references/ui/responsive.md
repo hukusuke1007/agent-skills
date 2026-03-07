@@ -82,7 +82,7 @@ ResponsiveLayout(
 
 ## Platform-Specific Layout Switching
 
-Treat tablet and macOS as the same layout tier:
+Treat tablet and desktop platforms as the same layout tier:
 
 ```dart
 import 'package:flutter/foundation.dart';
@@ -116,7 +116,7 @@ if (kIsWeb) { /* web-specific logic */ }
 
 ## Sidebar / Drawer Pattern
 
-Show a persistent side menu on tablet/macOS; switch to a `Drawer` when `width <= 1000`.
+Show a persistent side menu on tablet/desktop layouts; switch to a `Drawer` when `width <= 1000`.
 
 ```dart
 final isCompact = MediaQuery.sizeOf(context).width <= 1000;
