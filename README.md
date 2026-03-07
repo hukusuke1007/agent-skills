@@ -7,13 +7,7 @@ This repository contains reusable agent skills for a variety of development task
 To install skills from this repository, run:
 
 ```bash
-npx skills add hukusuke1007/agents-skills
-```
-
-To install a specific skill directly, run:
-
-```bash
-npx skills add hukusuke1007/agent-skills/flutter-riverpod-arch
+npx skills add hukusuke1007/agent-skills
 ```
 
 ## Updating Skills
@@ -24,17 +18,19 @@ To update installed skills from this repository, run:
 npx skills update hukusuke1007/agent-skills
 ```
 
-To update one specific skill, run:
-
-```bash
-npx skills update hukusuke1007/agent-skills/flutter-riverpod-arch
-```
-
 ## Available Skills
 
 | Skill | Description |
 | --- | --- |
 | [`flutter-riverpod-arch`](./flutter-riverpod-arch/SKILL.md) | Implement Feature-First Flutter architecture with Riverpod (code generation), Flutter Hooks, layered responsibilities (UI → Use Case → Repository → Data Source), and testing patterns. |
+
+## References
+
+- [https://agentskills.io](https://agentskills.io)
+- [https://github.com/anthropics/skills](https://github.com/anthropics/skills)
+- [https://github.com/vercel-labs/skills](https://github.com/vercel-labs/skills)
+- [https://github.com/flutter/skills](https://github.com/flutter/skills)
+- [https://skills.sh](https://skills.sh)
 
 ## Contributing
 
