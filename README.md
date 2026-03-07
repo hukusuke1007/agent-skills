@@ -1,6 +1,6 @@
 # Agent Skills
 
-This repository contains agent skills for Flutter development that can be used with both Claude and Codex.
+This repository contains reusable agent skills for a variety of development tasks across different tools and workflows.
 
 ## Installation
 
