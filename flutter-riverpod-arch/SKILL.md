@@ -1,6 +1,10 @@
 ---
 name: "flutter-riverpod-arch"
 description: "Implement Feature-First architecture with Riverpod state management and Flutter Hooks in Flutter applications"
+license: "MIT"
+metadata:
+  author: "shohei"
+  version: "1.0.0"
 ---
 
 # Flutter Riverpod Architecture
