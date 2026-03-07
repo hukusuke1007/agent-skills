@@ -98,7 +98,6 @@ features/post/
    - Simple flags and settings → `SharedPreferences`
    - Complex user data or content → `sembast`, `sqflite`, etc.
 4. Use immutable state patterns.
-5. Choose the correct provider scope (see Decision Logic in SKILL.md).
 
 ## Widget Guidelines
 
@@ -150,6 +149,6 @@ features/post/
    - Handle loading and error states explicitly.
 3. Avoid unnecessary provider rebuilds by splitting providers appropriately.
 
-## Model Layer (Out of Scope)
+## Model Layer
 
-Model / domain classes (e.g., `Post`, `User`) are outside the scope of this skill. By convention, use immutable value objects with `fromJson` / `toJson`. Implementation options include hand-written classes with `copyWith`, `freezed`, or `dart_mappable`. Choose whichever fits the project.
+Model / domain classes (e.g., `Post`, `User`) are within the scope of this skill. Prefer immutable models with `fromJson` / `toJson`. Recommended approaches are `freezed`, or hand-written immutable classes combined with `equatable`. Choose the approach that best fits the project and keep the model style consistent across the codebase.

@@ -196,3 +196,8 @@ dart run build_runner watch   # continuous
 - **Split providers** to minimize rebuild scope; one provider per piece of state.
 - **Avoid circular dependencies** between providers.
 - **Use `ref.invalidate()`** after mutations to keep dependent providers consistent.
+
+## Official Documentation
+
+For package setup, latest installation guidance, and the official introduction flow, refer to Riverpod's Getting Started guide:
+[https://riverpod.dev/docs/introduction/getting_started](https://riverpod.dev/docs/introduction/getting_started)
