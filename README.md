@@ -13,7 +13,7 @@ npx skills add hukusuke1007/agents-skills
 To install a specific skill directly, run:
 
 ```bash
-npx skills add hukusuke1007/agents-skills/flutter-riverpod-arch
+npx skills add hukusuke1007/agent-skills/flutter-riverpod-arch
 ```
 
 ## Updating Skills
@@ -21,13 +21,13 @@ npx skills add hukusuke1007/agents-skills/flutter-riverpod-arch
 To update installed skills from this repository, run:
 
 ```bash
-npx skills update hukusuke1007/agents-skills
+npx skills update hukusuke1007/agent-skills
 ```
 
 To update one specific skill, run:
 
 ```bash
-npx skills update hukusuke1007/agents-skills/flutter-riverpod-arch
+npx skills update hukusuke1007/agent-skills/flutter-riverpod-arch
 ```
 
 ## Available Skills
