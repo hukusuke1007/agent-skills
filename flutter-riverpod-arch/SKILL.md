@@ -35,15 +35,11 @@ Identify the feature, confirm whether the implementation is shared or feature-lo
 
 See **[architecture.md](references/architecture.md)** for directory structure and naming.
 
----
-
 ### 2. Implement the Repository Layer
 
 Implement Repository code in the Repository layer and follow the Riverpod/provider rules for Repository providers.
 
 See **[providers.md](references/providers.md)** for Repository implementation details and **[riverpod.md](references/riverpod.md)** for provider scope rules.
-
----
 
 ### 3. Implement the UseCase Layer
 
@@ -51,15 +47,11 @@ Implement UseCase code in the UseCase layer for validation, orchestration, and U
 
 See **[providers.md](references/providers.md)** for UseCase patterns and **[riverpod.md](references/riverpod.md)** for provider scope rules.
 
----
-
 ### 4. Build the UI with HookConsumerWidget
 
 Build UI in the Presentation layer using the patterns required by this skill.
 
 See **[presentation.md](references/presentation.md)** for page and widget structure, **[riverpod.md](references/riverpod.md)** for `ref.watch` / `ref.read`, and **[button.md](references/ui/button.md)** for button and cursor rules.
-
----
 
 ### 5. Implement Responsive Layout
 
@@ -67,15 +59,11 @@ Apply the responsive layout rules defined for this skill.
 
 See **[responsive.md](references/ui/responsive.md)** for breakpoint policy and responsive layout patterns.
 
----
-
 ### 6. Write Tests
 
 Test Repository, UseCase, controller, and widget behavior with the testing patterns used by this skill.
 
 See **[testing.md](references/testing.md)** for test structure, overrides, and fake/mock patterns.
-
----
 
 ## Constraints
 
