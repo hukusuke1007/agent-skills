@@ -22,7 +22,7 @@ npx skills update hukusuke1007/agent-skills
 
 | Skill | Description |
 | --- | --- |
-| [`flutter-riverpod-arch`](./flutter-riverpod-arch/SKILL.md) | Implement Feature-First Flutter architecture with Riverpod (code generation), Flutter Hooks, layered responsibilities (UI → Use Case → Repository → Data Source), and testing patterns. |
+| [`flutter-riverpod-arch`](./flutter-riverpod-arch/SKILL.md) | Implement Feature-First Flutter architecture with Riverpod (code generation), Flutter Hooks, layered responsibilities (UI → Use Case → Repository), and testing patterns. |
 
 ## References
 
