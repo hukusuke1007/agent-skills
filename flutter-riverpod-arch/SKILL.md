@@ -13,6 +13,14 @@ metadata:
 
 Implements scalable Flutter applications using the Feature-First directory structure, Riverpod (with code generation) for state management, and `flutter_hooks` / `HookConsumerWidget` for UI composition. The design philosophy is three layers — presentation, domain, and infrastructure — and the code-level notation in this skill is UI, UseCase, and Repository. Data source access is encapsulated inside repositories. Applies `@Riverpod(keepAlive: true)` for repository providers and `@riverpod` for screen-scoped state.
 
+### Layer Mapping (Source of Truth)
+
+| Design philosophy | Code-level notation |
+| --- | --- |
+| presentation | UI |
+| domain | UseCase |
+| infrastructure | Repository |
+
 ## Decision Logic
 
 Before implementing, evaluate the following to determine the correct approach:
@@ -41,9 +49,8 @@ Before implementing, evaluate the following to determine the correct approach:
 - Default: keep both layers under `providers/` and split by responsibility:
   - `providers/use_cases/` for UseCase/controller implementations
   - `providers/repositories/` for Repository/data access implementations
-- If this is unclear for the team, you may use explicit directory names:
-  - `usecases/` (or `domain/`)
-  - `repositories/` (or `infrastructures/`)
+- Recommended names in this skill are `use_cases` and `repositories`.
+- Alternative names (`domain`, `infrastructures`) are also acceptable.
 
 ## Instructions
 
@@ -72,7 +79,7 @@ lib/
       {feature}_page.dart
 ```
 
-_Validate-and-Fix:_ Confirm that no UseCase/Repository implementation is placed inside `pages/`. Confirm that shared implementations live in `core/providers/` (or explicit `core/usecases` / `core/repositories`), not duplicated across features.
+_Validate-and-Fix:_ Confirm that no UseCase/Repository implementation is placed inside `pages/`. Confirm that shared implementations live in `core/providers/` (or explicit `core/use_cases` / `core/repositories`), not duplicated across features.
 
 ---
 
@@ -92,7 +99,7 @@ _Validate-and-Fix:_ Confirm the repository contains no business logic (no valida
 
 ### 3. Implement the UseCase Layer
 
-For operations that involve validation, multi-step orchestration, or combining repositories, create a dedicated UseCase class inside `providers/use_cases/` (or `usecases/`). Three patterns:
+For operations that involve validation, multi-step orchestration, or combining repositories, create a dedicated UseCase class inside `providers/use_cases/` (alternative: `domain/`). Three patterns:
 
 - **Async data fetcher** — `class FetchPosts extends _$FetchPosts` with `Future<T> build()`
 - **Action use case (callable class)** — `CreatePost` with `call()` for commands; invalidate dependent providers after writes

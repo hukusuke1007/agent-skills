@@ -132,6 +132,7 @@ void main() {
 ## 4. Widget Tests
 
 Use `ProviderScope` with overrides to inject fake dependencies.
+Prefer overriding repositories or external dependencies consumed by providers.
 
 ```dart
 void main() {
@@ -139,8 +140,8 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          fetchPostsProvider.overrideWith(
-            (ref) => Future.delayed(const Duration(seconds: 1), () => []),
+          postRepositoryProvider.overrideWith(
+            (ref) => DelayedPostRepository(),
           ),
         ],
         child: const MaterialApp(home: PostListPage()),
@@ -154,19 +155,21 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          fetchPostsProvider.overrideWith(
-            (ref) async => [Post(id: '1', title: 'Hello', body: 'World')],
+          postRepositoryProvider.overrideWith(
+            (ref) => FakePostRepository(),
           ),
         ],
         child: const MaterialApp(home: PostListPage()),
       ),
     );
 
-    await tester.pump(); // trigger async
+    await tester.pumpAndSettle();
     expect(find.text('Hello'), findsOneWidget);
   });
 }
 ```
+
+If you override a class-based generated provider directly (`@riverpod class ...`), use its notifier override API (`overrideWith(() => FakeNotifier())`) instead of function-style overrides.
 
 ## 5. Fake Implementations
 
@@ -189,6 +192,24 @@ class FakePostRepository implements PostRepository {
   @override
   Future<void> deletePost(String id) async =>
       _posts.removeWhere((p) => p.id == id);
+}
+
+class DelayedPostRepository implements PostRepository {
+  @override
+  Future<List<Post>> fetchPosts() async {
+    await Future<void>.delayed(const Duration(seconds: 1));
+    return <Post>[];
+  }
+
+  @override
+  Future<Post> fetchPost(String id) async =>
+      throw UnimplementedError();
+
+  @override
+  Future<void> createPost(Post post) async {}
+
+  @override
+  Future<void> deletePost(String id) async {}
 }
 ```
 

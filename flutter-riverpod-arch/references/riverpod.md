@@ -7,6 +7,7 @@
 Use for state that must survive for the entire app lifetime:
 
 - Repositories (data source access)
+- Stateless command providers (action entry points)
 - Authentication state
 - Global app settings
 - Shared caches
@@ -23,6 +24,7 @@ Use for state scoped to a screen or a short-lived operation:
 - Screen-specific state
 - Form state
 - UI controllers
+- Async fetchers tied to UI lifecycle
 
 ```dart
 @riverpod
@@ -190,7 +192,7 @@ dart run build_runner watch   # continuous
 
 ## 8. Best Practices
 
-- **Prefer auto-dispose** (`@riverpod`) by default; only use `keepAlive: true` when global persistence is genuinely required.
+- **Default rule:** Use `@riverpod` for screen-scoped/stateful providers, and `@Riverpod(keepAlive: true)` for repositories plus stateless command providers.
 - **Split providers** to minimize rebuild scope; one provider per piece of state.
 - **Avoid circular dependencies** between providers.
 - **Use `ref.invalidate()`** after mutations to keep dependent providers consistent.

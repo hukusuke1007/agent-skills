@@ -4,17 +4,25 @@
 
 For apps targeting iOS, Android, macOS, and Web, implement layout switching based on screen size and platform using consistent patterns.
 
+Use `width` as the primary signal for page-level layout decisions. Use `shortestSide` only as a secondary signal when you need coarse device categorization such as phone vs tablet.
+
 ## Breakpoints
 
 | Tier            | Condition             | Layout                               |
 | --------------- | --------------------- | ------------------------------------ |
-| Phone           | `shortestSide < 600`  | `BottomNavigationBar`, single-column |
-| Tablet / macOS  | `shortestSide >= 600` | Side menu, two-column layout         |
+| Phone           | `width < 600`         | `BottomNavigationBar`, single-column |
+| Tablet / macOS  | `width >= 600`        | Side menu, two-column layout         |
 | Compact sidebar | `width <= 1000`       | Switch side menu to `Drawer`         |
 
 ## `ResponsiveLayout` Widget
 
 Use `ResponsiveLayout` for page-level layout switching. It uses `MediaQuery.sizeOf(context).width` — actual screen width — not `LayoutBuilder` constraints, which reflect only the parent widget's size.
+
+Why not use `shortestSide` as the primary signal here:
+
+- Page layouts such as sidebar vs bottom navigation depend on horizontal space.
+- Web and desktop windows are resizable, so actual width matters more than device category.
+- `shortestSide` is still useful when you need a broad phone/tablet distinction, but it is not the best primary signal for page composition.
 
 ```dart
 class ResponsiveLayout extends StatelessWidget {
@@ -77,18 +85,24 @@ ResponsiveLayout(
 Treat tablet and macOS as the same layout tier:
 
 ```dart
-import 'dart:io';
+import 'package:flutter/foundation.dart';
 
 // Inside build():
-final isTablet = MediaQuery.sizeOf(context).shortestSide >= 600;
-final page = (Platform.isMacOS || isTablet)
+final width = MediaQuery.sizeOf(context).width;
+final isTabletOrLarger = width >= 600;
+final isDesktopPlatform = !kIsWeb &&
+    (defaultTargetPlatform == TargetPlatform.macOS ||
+     defaultTargetPlatform == TargetPlatform.windows ||
+     defaultTargetPlatform == TargetPlatform.linux);
+final page = (isDesktopPlatform || isTabletOrLarger)
     ? const HomeDesktopPage()
     : const HomeMobilePage();
 ```
 
-For platform-specific system operations (file I/O, etc.) in the logic layer, use `dart:io`:
+For platform-specific system operations (file I/O, etc.) in the logic layer, `dart:io` is acceptable in non-web files only:
 
 ```dart
+// Non-web file only
 import 'dart:io';
 if (Platform.isMacOS) { /* macOS file export */ }
 ```
@@ -134,7 +148,7 @@ Scaffold(
 
 ```dart
 final width = MediaQuery.sizeOf(context).width;
-final isTablet = MediaQuery.sizeOf(context).shortestSide >= 600;
+final isTablet = MediaQuery.sizeOf(context).width >= 600;
 final isLandscape = MediaQuery.orientationOf(context) == Orientation.landscape;
 
 // Horizontal content padding
@@ -175,5 +189,6 @@ LayoutBuilder(
 
 1. Use targeted `MediaQuery` static methods (`MediaQuery.sizeOf`, `MediaQuery.paddingOf`, `MediaQuery.orientationOf`) instead of `MediaQuery.of(context)` to avoid unnecessary rebuilds.
 2. Use `ResponsiveLayout` for page-level layout switching; use `LayoutBuilder` for widget-level adaptations only.
-3. Treat tablet and macOS as the same layout tier to minimize code duplication.
-4. Use `Platform.isMacOS` for macOS checks in both UI and logic layers. Use `kIsWeb` (from `package:flutter/foundation.dart`) for web-specific logic, as `Platform` is unavailable on Web.
+3. Use `width` as the primary page-level breakpoint signal; use `shortestSide` only for special cases.
+4. Treat tablet and desktop platforms as the same layout tier to minimize code duplication.
+5. In UI code, prefer `defaultTargetPlatform` + `kIsWeb` over direct `dart:io` imports.

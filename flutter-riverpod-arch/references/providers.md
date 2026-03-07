@@ -36,8 +36,8 @@ lib/
 │   └── ...
 ```
 
-If `providers/` is ambiguous for your team, it is acceptable to use explicit directories:
-`features/{feature}/usecases/` (or `domain/`) and `features/{feature}/repositories/` (or `infrastructures/`).
+Recommended directory names are `use_cases` and `repositories`.
+Alternative aliases are `domain` and `infrastructures`.
 
 ## 3. Repository Implementation
 
