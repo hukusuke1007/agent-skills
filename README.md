@@ -1,13 +1,45 @@
-# Agents Skills
+# Agent Skills
 
-This repository contains agent skills that can be used with both Claude and Codex.
+This repository contains agent skills for Flutter development that can be used with both Claude and Codex.
 
-## How to install
+## Installation
+
+To install skills from this repository, run:
+
+```bash
+npx skills add hukusuke1007/agents-skills
+```
+
+To install a specific skill directly, run:
 
 ```bash
 npx skills add hukusuke1007/agents-skills/flutter-riverpod-arch
 ```
 
-```sh
+## Updating Skills
+
+To update installed skills from this repository, run:
+
+```bash
+npx skills update hukusuke1007/agents-skills
+```
+
+To update one specific skill, run:
+
+```bash
 npx skills update hukusuke1007/agents-skills/flutter-riverpod-arch
 ```
+
+## Available Skills
+
+| Skill | Description |
+| --- | --- |
+| [`flutter-riverpod-arch`](./flutter-riverpod-arch/SKILL.md) | Implement Feature-First Flutter architecture with Riverpod (code generation), Flutter Hooks, layered responsibilities (UI → Use Case → Repository → Data Source), and testing patterns. |
+
+## Contributing
+
+Issues and pull requests are welcome for new skills, improvements, and fixes.
+
+## License
+
+This repository is licensed under the [MIT License](./LICENSE).
