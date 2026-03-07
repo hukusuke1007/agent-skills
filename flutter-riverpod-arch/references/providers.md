@@ -94,7 +94,7 @@ class FetchPosts extends _$FetchPosts {
 ```dart
 part 'create_post.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 CreatePost createPost(Ref ref) => CreatePost(ref);
 
 class CreatePost {
@@ -156,7 +156,8 @@ class PostController extends _$PostController {
 1. **Single responsibility:** One use case per operation.
 2. **Inject via Riverpod:** Use `ref.read(repositoryProvider)` inside use cases; never instantiate repositories directly.
 3. **Invalidate after mutations:** Call `ref.invalidate(provider)` after writes so dependent providers stay fresh.
-4. **Scope correctly:** Use `@riverpod` (auto-disposed) for screen-scoped use cases and controllers.
+4. **Stateless command providers:** For function-based providers that only expose a stateless operation (for example, `CreatePost createPost(Ref ref) => CreatePost(ref);`), use `@Riverpod(keepAlive: true)`.
+5. **Scope correctly:** Use `@riverpod` (auto-disposed) for screen-scoped stateful use cases and controllers.
 
 ## 5. Code Generation
 
