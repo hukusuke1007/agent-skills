@@ -113,10 +113,12 @@ features/post/
 
 1. Design philosophy: `Presentation + Domain + Infrastructure`.
 2. Code-level notation: `UI + UseCase + Repository`.
-3. Default layout: place UseCase/Repository implementations in `features/{feature}/providers/` and `core/providers/`.
-4. Optional explanation terms: `Domain` and `Infrastructures` may be used as conceptual layer names, while actual directory names remain `use_cases` and `repositories`.
-5. Keep each file focused on a single responsibility.
-6. Implement error handling in every async provider.
+3. UseCase provides application logic that satisfies business requirements.
+4. Repository provides data persistence and retrieval functionality, including API, database, and local storage operations.
+5. Default layout: place UseCase/Repository implementations in `features/{feature}/providers/` and `core/providers/`.
+6. Optional explanation terms: `Domain` and `Infrastructures` may be used as conceptual layer names, while actual directory names remain `use_cases` and `repositories`.
+7. Keep each file focused on a single responsibility.
+8. Implement error handling in every async provider.
 
 ## Feature Organization
 

@@ -2,12 +2,12 @@
 
 ## 1. Architecture Layers
 
-```
-UseCase Layer     →  Use cases, controllers, business orchestration
-Repository Layer  →  Repositories and data access (encapsulates API clients/local DB)
-```
+- UseCase
+  - Provides application logic that satisfies business requirements.
+- Repository
+  - Provides data persistence and retrieval functionality.
+  - Handles data operations such as API access, database access, and local storage.
 
-Design mapping: Domain = UseCase, Infrastructure = Repository.
 Data flows strictly downward: UseCase → Repository.
 
 ## 2. Directory Structure
@@ -36,7 +36,7 @@ lib/
 ```
 
 Recommended directory names are `use_cases` and `repositories`.
-Alternative aliases are `domain` and `infrastructures`.
+`domain` and `infrastructures` may be used as conceptual layer names.
 
 ## 3. Repository Implementation
 
