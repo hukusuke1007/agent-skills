@@ -7,7 +7,7 @@ metadata:
   version: "1.0.0"
 ---
 
-# Next.js + Better Auth + PostgreSQL
+# Next.js + Better Auth + PostgreSQL + Docker
 
 Next.js App Router + Better Auth + PostgreSQL を Docker で構築し、Cloud Run へデプロイするためのスキルです。
 
