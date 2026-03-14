@@ -101,11 +101,11 @@ gcloud sql instances describe "$DB_INSTANCE_NAME" \
 
 必要な変数:
 
-| 変数名 | 説明 |
-|---|---|
-| `DATABASE_URL` | Cloud SQL Unix socket 経由の接続文字列 |
-| `BETTER_AUTH_SECRET` | 認証シークレット（長いランダム文字列） |
-| `BETTER_AUTH_URL` | Cloud Run の公開 URL |
+| 変数名                  | 説明                                              |
+| ----------------------- | ------------------------------------------------- |
+| `DATABASE_URL`          | Cloud SQL Unix socket 経由の接続文字列            |
+| `BETTER_AUTH_SECRET`    | 認証シークレット（長いランダム文字列）            |
+| `BETTER_AUTH_URL`       | Cloud Run の公開 URL                              |
 | `INTERNAL_API_BASE_URL` | SSR 用の内部 URL（Cloud Run では公開 URL と同じ） |
 
 `BETTER_AUTH_SECRET` 生成:
@@ -196,7 +196,7 @@ gcloud auth application-default login
 
 ### 6-2. Cloud SQL Auth Proxy を起動する（別ターミナルで）
 
-参考: https://docs.cloud.google.com/sql/docs/mysql/connect-auth-proxy
+参考: <https://docs.cloud.google.com/sql/docs/mysql/connect-auth-proxy>
 
 ```bash
 ./cloud-sql-proxy PROJECT_ID:REGION:INSTANCE_NAME --port 5432
@@ -352,6 +352,7 @@ gcloud run deploy "$SERVICE_NAME" \
 ## ステップ 9: 動作確認する
 
 確認項目:
+
 - `/sign-up` でユーザー登録できる
 - `/sign-in` でログインできる
 - `/todos` が表示できる
@@ -412,17 +413,17 @@ gcloud artifacts repositories delete "$REPOSITORY_NAME" --location="$REGION"
 
 ## よくあるエラーと対処
 
-| エラー | 原因 | 対処 |
-|---|---|---|
-| `Permission denied on secret ...` | Secret Accessor 権限なし | ステップ 5 を実行する |
-| `connect ENOENT /cloudsql/.../.s.PGSQL.5432` | Cloud SQL 接続未設定 | `--add-cloudsql-instances` を追加する |
-| `BETTER_AUTH_URL` が不正 | デプロイ前に URL が未確定 | ステップ 10 で URL 更新する |
+| エラー                                       | 原因                      | 対処                                  |
+| -------------------------------------------- | ------------------------- | ------------------------------------- |
+| `Permission denied on secret ...`            | Secret Accessor 権限なし  | ステップ 5 を実行する                 |
+| `connect ENOENT /cloudsql/.../.s.PGSQL.5432` | Cloud SQL 接続未設定      | `--add-cloudsql-instances` を追加する |
+| `BETTER_AUTH_URL` が不正                     | デプロイ前に URL が未確定 | ステップ 10 で URL 更新する           |
 
 ---
 
 ## 参考
 
-- Cloud Run deploy: https://cloud.google.com/run/docs/deploying
-- Cloud SQL から Cloud Run 接続: https://docs.cloud.google.com/sql/docs/postgres/connect-run
-- Artifact Registry Docker: https://docs.cloud.google.com/artifact-registry/docs/docker/store-docker-container-images
-- Cloud Run custom domains: https://docs.cloud.google.com/run/docs/mapping-custom-domains
+- Cloud Run deploy: <https://cloud.google.com/run/docs/deploying>
+- Cloud SQL から Cloud Run 接続: <https://docs.cloud.google.com/sql/docs/postgres/connect-run>
+- Artifact Registry Docker: <https://docs.cloud.google.com/artifact-registry/docs/docker/store-docker-container-images>
+- Cloud Run custom domains: <https://docs.cloud.google.com/run/docs/mapping-custom-domains>

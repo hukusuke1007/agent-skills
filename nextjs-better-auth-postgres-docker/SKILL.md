@@ -23,10 +23,10 @@ Next.js App Router + Better Auth + PostgreSQL を Docker で構築し、Cloud Ru
 
 詳細な手順は以下の reference ファイルに分けています。
 
-| ファイル | 内容 |
-|---|---|
-| `references/local-setup.md` | ローカル開発環境の構築（Docker Compose + アプリ Docker 化まで） |
-| `references/cloud-run-deploy.md` | Cloud Run へのデプロイ（Cloud SQL + Secret Manager 使用） |
+| ファイル                         | 内容                                                            |
+| -------------------------------- | --------------------------------------------------------------- |
+| `references/local-setup.md`      | ローカル開発環境の構築（Docker Compose + アプリ Docker 化まで） |
+| `references/cloud-run-deploy.md` | Cloud Run へのデプロイ（Cloud SQL + Secret Manager 使用）       |
 
 ## どちらを参照するか
 
@@ -38,8 +38,8 @@ Next.js App Router + Better Auth + PostgreSQL を Docker で構築し、Cloud Ru
 
 実行環境によって値が変わる変数を把握しておく。
 
-| 変数名 | ローカル直実行 | Docker Compose (app コンテナ) | Cloud Run |
-|---|---|---|---|
-| `DATABASE_URL` のホスト | `localhost` | `db` | Cloud SQL Unix socket |
-| `BETTER_AUTH_URL` | `http://localhost:3000` | `http://localhost:3000` | Cloud Run サービス URL |
-| `INTERNAL_API_BASE_URL` | `http://localhost:3000` | `http://app:3000` | Cloud Run サービス URL |
+| 変数名                  | ローカル直実行          | Docker Compose (app コンテナ) | Cloud Run              |
+| ----------------------- | ----------------------- | ----------------------------- | ---------------------- |
+| `DATABASE_URL` のホスト | `localhost`             | `db`                          | Cloud SQL Unix socket  |
+| `BETTER_AUTH_URL`       | `http://localhost:3000` | `http://localhost:3000`       | Cloud Run サービス URL |
+| `INTERNAL_API_BASE_URL` | `http://localhost:3000` | `http://app:3000`             | Cloud Run サービス URL |

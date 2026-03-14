@@ -86,6 +86,7 @@ INTERNAL_API_BASE_URL=http://localhost:3000
 ```
 
 **注意点:**
+
 - `DATABASE_URL` のホスト名はローカル実行時は `localhost`、Compose 内の app コンテナからは `db`
 - `BETTER_AUTH_SECRET` は `openssl rand -base64 32` で生成した値を使う
 - `INTERNAL_API_BASE_URL` は SSR で Next.js の API を呼ぶための絶対 URL（SSR はサーバー上で動くため相対 URL 不可）
@@ -382,8 +383,8 @@ docker compose up --build
 
 ## 参考
 
-- Better Auth Installation: https://better-auth.com/docs/installation
-- Better Auth Next.js Integration: https://better-auth.com/docs/integrations/next
-- Better Auth PostgreSQL: https://better-auth.com/docs/adapters/postgresql
-- Next.js Docker Docs: https://nextjs.org/docs/app/building-your-application/deploying#docker-image
-- Next.js `output: "standalone"`: https://nextjs.org/docs/app/api-reference/config/next-config-js/output
+- Better Auth Installation: <https://better-auth.com/docs/installation>
+- Better Auth Next.js Integration: <https://better-auth.com/docs/integrations/next>
+- Better Auth PostgreSQL: <https://better-auth.com/docs/adapters/postgresql>
+- Next.js Docker Docs: <https://nextjs.org/docs/app/building-your-application/deploying#docker-image>
+- Next.js `output: "standalone"`: <https://nextjs.org/docs/app/api-reference/config/next-config-js/output>
