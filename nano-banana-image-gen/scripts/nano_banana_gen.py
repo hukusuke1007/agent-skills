@@ -21,7 +21,7 @@ env_path = project_root / ".env"
 load_dotenv(dotenv_path=env_path)
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-OUTPUT_DIR = os.getenv("GENERATED_IMAGE_OUTPUT_PATH", "0_images/generated")
+OUTPUT_DIR = os.getenv("GENERATED_IMAGE_OUTPUT_PATH", "images/generated")
 
 if not GEMINI_API_KEY:
     print("エラー: GEMINI_API_KEY が .env に設定されていません", file=sys.stderr)
