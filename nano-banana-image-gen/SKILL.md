@@ -3,7 +3,7 @@ name: nano-banana-image-gen
 description: Nano Banana 2（Google Gemini gemini-3.1-flash-image-preview）を使って画像を生成するスキル。「画像を生成して」「〇〇のイラストを作って」「Nano Bananaで画像を作って」「グラレコ風の画像を生成して」などのリクエストで使用する。プロンプトを受け取りpythonスクリプトを実行、タイムスタンプ付きPNGを images/generated/ に出力する。
 license: MIT
 author: shohei
-version: 1.0.1
+version: 1.0.2
 ---
 
 # Nano Banana 画像生成
@@ -28,13 +28,15 @@ GEMINI_API_KEY=your_api_key_here
 GENERATED_IMAGE_OUTPUT_PATH=images/generated
 ```
 
-セキュリティ: `.env` をプロジェクトルートに置く場合は、AIがAPIキーを読み込まないよう `.claudeignore` に `.env` を追加すること。
+セキュリティ: `.env` をプロジェクトルートに置く場合は、`settings.json` の `denyRead` に `.env` を追加してAIが読み込めないよう設定すること。
 
-```text
-# .claudeignore
-.env
-.env.*
-!.env.sample
+```json
+// .claude/settings.json
+{
+  "permissions": {
+    "deny": ["Read(.env)", "Read(.env.*)"]
+  }
+}
 ```
 
 | 変数名                        | 説明                                                 |
