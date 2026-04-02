@@ -1,6 +1,6 @@
 ---
 name: nano-banana-image-gen
-description: Nano Banana 2（Google Gemini gemini-3.1-flash-image-preview）を使って画像を生成するスキル。「画像を生成して」「〇〇のイラストを作って」「Nano Bananaで画像を作って」「グラレコ風の画像を生成して」などのリクエストで使用する。プロンプトを受け取りpythonスクリプトを実行、タイムスタンプ付きPNGを 0_images/generated/ に出力する。
+description: Nano Banana 2（Google Gemini gemini-3.1-flash-image-preview）を使って画像を生成するスキル。「画像を生成して」「〇〇のイラストを作って」「Nano Bananaで画像を作って」「グラレコ風の画像を生成して」などのリクエストで使用する。プロンプトを受け取りpythonスクリプトを実行、タイムスタンプ付きPNGを images/generated/ に出力する。
 license: MIT
 author: shohei
 version: 1.0.0
