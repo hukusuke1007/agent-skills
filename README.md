@@ -71,6 +71,31 @@ Install dependencies:
 pip install google-genai pillow python-dotenv
 ```
 
+#### Security Note: Protecting `.env` from AI
+
+AI coding tools (Claude Code, Cursor, etc.) may automatically read `.env` files and send the contents — including API keys — to LLM providers. To prevent this, add the following to your `settings.json`:
+
+```json
+// .claude/settings.json
+{
+  "permissions": {
+    "deny": [
+      "Read(.env)",
+      "Read(.env.*)"
+    ]
+  }
+}
+```
+
+Also add `.env` to `.gitignore` to avoid accidentally committing secrets:
+
+```
+# .gitignore
+.env
+.env.*
+!.env.sample
+```
+
 ## References
 
 - [https://agentskills.io](https://agentskills.io)
