@@ -3,7 +3,7 @@ name: nano-banana-image-gen
 description: Nano Banana 2（Google Gemini gemini-3.1-flash-image-preview）を使って画像を生成するスキル。「画像を生成して」「〇〇のイラストを作って」「Nano Bananaで画像を作って」「グラレコ風の画像を生成して」などのリクエストで使用する。プロンプトを受け取りpythonスクリプトを実行、タイムスタンプ付きPNGを images/generated/ に出力する。
 license: MIT
 author: shohei
-version: 1.0.2
+version: 1.1.0
 ---
 
 # Nano Banana 画像生成
@@ -11,10 +11,25 @@ version: 1.0.2
 ## 実行手順
 
 1. ユーザーのリクエストから画像生成プロンプトを確定する
-2. 以下のコマンドを実行する
+2. マルチモーダル指示（フレーム画像など入力画像あり）の場合は `--image` 引数を付ける
+3. 以下のコマンドを実行する
+
+テキストのみ:
 
 ```bash
 python .claude/skills/nano-banana-image-gen/scripts/nano_banana_gen.py "プロンプトテキスト"
+```
+
+画像+テキスト（マルチモーダル）:
+
+```bash
+python .claude/skills/nano-banana-image-gen/scripts/nano_banana_gen.py "プロンプトテキスト" --image "画像パス"
+```
+
+画像複数+テキスト:
+
+```bash
+python .claude/skills/nano-banana-image-gen/scripts/nano_banana_gen.py "プロンプトテキスト" --image "画像1" --image "画像2"
 ```
 
 1. 出力パスを確認してユーザーに報告する
