@@ -25,7 +25,7 @@ npx skills update hukusuke1007/agent-skills
 | [`flutter-riverpod-arch`](./flutter-riverpod-arch/SKILL.md)                           | Implement Feature-First Flutter architecture with Riverpod (code generation), Flutter Hooks, layered responsibilities (UI → Use Case → Repository), and testing patterns.                                           |
 | [`nextjs-better-auth-postgres-docker`](./nextjs-better-auth-postgres-docker/SKILL.md) | Build and deploy a Next.js (App Router) + Better Auth + PostgreSQL app using Docker locally, and deploy to Google Cloud Run with Cloud SQL and Secret Manager. **Written in Japanese.**                             |
 | [`meti-ai-guideline`](./meti-ai-guideline/SKILL.md)                                   | Answer OK/NG judgments, checklists, and guidance based on Japan's AI Business Operator Guidelines (経済産業省・総務省 AI事業者ガイドライン). Supports AI developers, providers, and users. **Written in Japanese.** |
-| [`nano-banana-image-gen`](./nano-banana-image-gen/SKILL.md)                           | Generate images using Google Gemini (`gemini-2.0-flash-preview-image-generation`). Outputs timestamped PNGs to `0_images/generated/`. Requires a Gemini API key. **Written in Japanese.**                           |
+| [`nano-banana-image-gen`](./nano-banana-image-gen/SKILL.md)                           | Generate images using Google Gemini. Outputs timestamped PNGs to `0_images/generated/`. Requires a Gemini API key. **Written in Japanese.**                                                                         |
 
 ## Setup Notes
 
@@ -79,10 +79,7 @@ AI coding tools (Claude Code, Cursor, etc.) may automatically read `.env` files 
 // .claude/settings.json
 {
   "permissions": {
-    "deny": [
-      "Read(.env)",
-      "Read(.env.*)"
-    ]
+    "deny": ["Read(.env)", "Read(.env.*)"]
   }
 }
 ```
