@@ -20,7 +20,7 @@ version: 1.1.0
 python .claude/skills/nano-banana-image-gen/scripts/nano_banana_gen.py "プロンプトテキスト"
 ```
 
-画像+テキスト（マルチモーダル）:
+画像+テキスト:
 
 ```bash
 python .claude/skills/nano-banana-image-gen/scripts/nano_banana_gen.py "プロンプトテキスト" --image "画像パス"
