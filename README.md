@@ -1,46 +1,47 @@
 # Agent Skills
 
-This repository contains reusable agent skills for a variety of development tasks across different tools and workflows.
+さまざまな開発タスクやワークフローで再利用できるエージェントスキル集です。
 
-## Installation
+## インストール
 
-To install skills from this repository, run:
+このリポジトリのスキルをインストールするには、以下を実行します:
 
 ```bash
 npx skills add hukusuke1007/agent-skills
 ```
 
-## Updating Skills
+## 更新
 
-To update installed skills from this repository, run:
+インストール済みのスキルを更新するには、以下を実行します:
 
 ```bash
 npx skills update hukusuke1007/agent-skills
 ```
 
-## Available Skills
+## 収録スキル一覧
 
-| Skill                                                                                 | Description                                                                                                                                                                                                         |
-| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [`flutter-riverpod-arch`](./flutter-riverpod-arch/SKILL.md)                           | Implement Feature-First Flutter architecture with Riverpod (code generation), Flutter Hooks, layered responsibilities (UI → Use Case → Repository), and testing patterns.                                           |
-| [`nextjs-better-auth-postgres-docker`](./nextjs-better-auth-postgres-docker/SKILL.md) | Build and deploy a Next.js (App Router) + Better Auth + PostgreSQL app using Docker locally, and deploy to Google Cloud Run with Cloud SQL and Secret Manager. **Written in Japanese.**                             |
-| [`meti-ai-guideline`](./meti-ai-guideline/SKILL.md)                                   | Answer OK/NG judgments, checklists, and guidance based on Japan's AI Business Operator Guidelines (経済産業省・総務省 AI事業者ガイドライン). Supports AI developers, providers, and users. **Written in Japanese.** |
-| [`nano-banana-image-gen`](./nano-banana-image-gen/SKILL.md)                           | Generate images using Google Gemini. Outputs timestamped PNGs to `0_images/generated/`. Requires a Gemini API key. **Written in Japanese.**                                                                         |
+| スキル                                                                                | 説明                                                                                                                                                                        |
+| ------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`flutter-riverpod-arch`](./flutter-riverpod-arch/SKILL.md)                           | Feature-First の Flutter アーキテクチャを、Riverpod（コード生成）・Flutter Hooks・レイヤー分割（UI → Use Case → Repository）・テストパターンで実装する。                    |
+| [`nextjs-better-auth-postgres-docker`](./nextjs-better-auth-postgres-docker/SKILL.md) | Next.js（App Router）+ Better Auth + PostgreSQL のアプリを Docker でローカル構築し、Google Cloud Run + Cloud SQL + Secret Manager にデプロイする。                          |
+| [`meti-ai-guideline`](./meti-ai-guideline/SKILL.md)                                   | 経済産業省・総務省「AI事業者ガイドライン」に基づいて、OK/NG判断・チェックリスト・ガイダンスを回答する。AI開発者・提供者・利用者の各立場に対応。                             |
+| [`nano-banana-image-gen`](./nano-banana-image-gen/SKILL.md)                           | Google Gemini で画像を生成し、タイムスタンプ付きPNGを `0_images/generated/` に出力する。Gemini APIキーが必要。                                                              |
+| [`image-compressor`](./image-compressor/SKILL.md)                                     | 複数の画像を Pillow で一括圧縮・リサイズする。デフォルトは長辺1920pxで、元のファイル名を維持（同名が存在する場合は自動で連番付与）。出力フォーマット（JPG/PNG）を指定可能。 |
 
-## Setup Notes
+## セットアップ手順
 
 ### meti-ai-guideline
 
-The `references/` directory is **not included** in this repository due to copyright. You need to download the PDFs from METI and set them up manually.
+`references/` ディレクトリは著作権の都合上、このリポジトリには **含まれていません**。経産省サイトからPDFをダウンロードして、手動でセットアップする必要があります。
 
-1. Download the following PDFs from the [METI page](https://www.meti.go.jp/shingikai/mono_info_service/ai_shakai_jisso/20260331_report.html):
-   - AI事業者ガイドライン (Main document)
-   - AI事業者ガイドライン活用の手引き (Usage guide)
-   - AI事業者ガイドライン チェックリスト 別添7 (Checklist)
+1. [経済産業省のページ](https://www.meti.go.jp/shingikai/mono_info_service/ai_shakai_jisso/20260331_report.html) から以下のPDFをダウンロードします:
+   - AI事業者ガイドライン（本編）
+   - AI事業者ガイドライン活用の手引き
+   - AI事業者ガイドライン チェックリスト 別添7
 
-2. Extract text using `pdftotext` and place the files as follows:
+2. `pdftotext` でテキストを抽出し、以下のように配置します:
 
-   ```
+   ```text
    meti-ai-guideline/references/
    ├── common_guidelines.md
    ├── ai_developer.md
@@ -50,30 +51,30 @@ The `references/` directory is **not included** in this repository due to copyri
    └── usage_guide.md
    ```
 
-3. Add the source attribution at the top of each file:
+3. 各ファイルの先頭に出典情報を追記します:
 
-   ```
+   ```text
    出典: AI事業者ガイドライン（第X.X版）総務省・経済産業省, YYYY年MM月DD日
    ```
 
 ### nano-banana-image-gen
 
-Requires a Google Gemini API key. Add the following to your `.env` file in the project root:
+Google Gemini APIキーが必要です。プロジェクトルートの `.env` に以下を追加してください:
 
-```
+```text
 GEMINI_API_KEY=your_api_key_here
 GENERATED_IMAGE_OUTPUT_PATH=images/generated
 ```
 
-Install dependencies:
+依存パッケージのインストール:
 
 ```bash
 pip install google-genai pillow python-dotenv
 ```
 
-#### Security Note: Protecting `.env` from AI
+#### セキュリティ注意: `.env` をAIから保護する
 
-AI coding tools (Claude Code, Cursor, etc.) may automatically read `.env` files and send the contents — including API keys — to LLM providers. To prevent this, add the following to your `settings.json`:
+Claude Code や Cursor などのAIコーディングツールは、`.env` ファイルを自動的に読み込み、APIキーを含む内容をLLMプロバイダーに送信してしまう可能性があります。これを防ぐため、`settings.json` に以下を追加してください:
 
 ```json
 // .claude/settings.json
@@ -84,16 +85,30 @@ AI coding tools (Claude Code, Cursor, etc.) may automatically read `.env` files 
 }
 ```
 
-Also add `.env` to `.gitignore` to avoid accidentally committing secrets:
+また、シークレットを誤ってコミットしないように `.gitignore` にも追加しましょう:
 
-```
+```text
 # .gitignore
 .env
 .env.*
 !.env.sample
 ```
 
-## References
+### image-compressor
+
+任意設定です。出力先ディレクトリをカスタマイズしたい場合は、プロジェクトルートの `.env` に以下を追加してください（デフォルトは `0_images/compressed`）:
+
+```text
+IMAGE_COMPRESS_OUTPUT_PATH=0_images/compressed
+```
+
+依存パッケージのインストール:
+
+```bash
+pip install pillow python-dotenv
+```
+
+## 参考リンク
 
 - [https://agentskills.io](https://agentskills.io)
 - [https://github.com/anthropics/skills](https://github.com/anthropics/skills)
@@ -101,10 +116,10 @@ Also add `.env` to `.gitignore` to avoid accidentally committing secrets:
 - [https://github.com/flutter/skills](https://github.com/flutter/skills)
 - [https://skills.sh](https://skills.sh)
 
-## Contributing
+## コントリビュート
 
-Issues and pull requests are welcome for new skills, improvements, and fixes.
+新しいスキルの提案・改善・修正のIssueやPull Requestを歓迎します。
 
-## License
+## ライセンス
 
-This repository is licensed under the [MIT License](./LICENSE).
+このリポジトリは [MIT License](./LICENSE) の下で公開されています。
