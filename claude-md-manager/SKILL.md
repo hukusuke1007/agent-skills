@@ -1,6 +1,9 @@
 ---
 name: claude-md-manager
-description: AGENTS.md / CLAUDE.mdの作成・編集・整理を行うスキル。CLAUDE.mdを50行以下を推奨とし、詳細ルールはrules/やスキルにモジュール化して分割管理する。以下のリクエストで使用する: (1)「CLAUDE.mdを作って」「AGENTS.mdを整理して」などCLAUDE.mdの新規作成・編集、(2)「ルールを追加して」「rules/に分割して」などルールの追加・分離、(3)「ディレクトリ構成を更新して」など参照の更新、(4) 新しいディレクトリやルールファイルを作成した後のCLAUDE.md反映。
+description: "AGENTS.md / CLAUDE.mdの作成・編集・整理を行うスキル。CLAUDE.mdを50行以下を推奨とし、詳細ルールはrules/やスキルにモジュール化して分割管理する。以下のリクエストで使用する: (1)「CLAUDE.mdを作って」「AGENTS.mdを整理して」などCLAUDE.mdの新規作成・編集、(2)「ルールを追加して」「rules/に分割して」などルールの追加・分離、(3)「ディレクトリ構成を更新して」など参照の更新、(4) 新しいディレクトリやルールファイルを作成した後のCLAUDE.md反映。"
+license: MIT
+author: shohei
+version: 1.0.0
 ---
 
 # CLAUDE.md Manager
