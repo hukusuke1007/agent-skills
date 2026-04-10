@@ -20,13 +20,14 @@ npx skills update hukusuke1007/agent-skills
 
 ## 収録スキル一覧
 
-| スキル                                                                                | 説明                                                                                                                                                                        |
-| ------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [`flutter-riverpod-arch`](./flutter-riverpod-arch/SKILL.md)                           | Feature-First の Flutter アーキテクチャを、Riverpod（コード生成）・Flutter Hooks・レイヤー分割（UI → Use Case → Repository）・テストパターンで実装する。                    |
-| [`nextjs-better-auth-postgres-docker`](./nextjs-better-auth-postgres-docker/SKILL.md) | Next.js（App Router）+ Better Auth + PostgreSQL のアプリを Docker でローカル構築し、Google Cloud Run + Cloud SQL + Secret Manager にデプロイする。                          |
-| [`meti-ai-guideline`](./meti-ai-guideline/SKILL.md)                                   | 経済産業省・総務省「AI事業者ガイドライン」に基づいて、OK/NG判断・チェックリスト・ガイダンスを回答する。AI開発者・提供者・利用者の各立場に対応。                             |
-| [`nano-banana-image-gen`](./nano-banana-image-gen/SKILL.md)                           | Google Gemini で画像を生成し、タイムスタンプ付きPNGを `0_images/generated/` に出力する。Gemini APIキーが必要。                                                              |
-| [`image-compressor`](./image-compressor/SKILL.md)                                     | 複数の画像を Pillow で一括圧縮・リサイズする。デフォルトは長辺1920pxで、元のファイル名を維持（同名が存在する場合は自動で連番付与）。出力フォーマット（JPG/PNG）を指定可能。 |
+| スキル                                                                                | 説明                                                                                                                                                                                                                                                                                              |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`flutter-riverpod-arch`](./flutter-riverpod-arch/SKILL.md)                           | Feature-First の Flutter アーキテクチャを、Riverpod（コード生成）・Flutter Hooks・レイヤー分割（UI → Use Case → Repository）・テストパターンで実装する。                                                                                                                                          |
+| [`nextjs-better-auth-postgres-docker`](./nextjs-better-auth-postgres-docker/SKILL.md) | Next.js（App Router）+ Better Auth + PostgreSQL のアプリを Docker でローカル構築し、Google Cloud Run + Cloud SQL + Secret Manager にデプロイする。                                                                                                                                                |
+| [`meti-ai-guideline`](./meti-ai-guideline/SKILL.md)                                   | 経済産業省・総務省「AI事業者ガイドライン」に基づいて、OK/NG判断・チェックリスト・ガイダンスを回答する。AI開発者・提供者・利用者の各立場に対応。                                                                                                                                                   |
+| [`nano-banana-image-gen`](./nano-banana-image-gen/SKILL.md)                           | Google Gemini で画像を生成し、タイムスタンプ付きPNGを `0_images/generated/` に出力する。Gemini APIキーが必要。                                                                                                                                                                                    |
+| [`image-compressor`](./image-compressor/SKILL.md)                                     | 複数の画像を Pillow で一括圧縮・リサイズする。デフォルトは長辺1920pxで、元のファイル名を維持（同名が存在する場合は自動で連番付与）。出力フォーマット（JPG/PNG）を指定可能。                                                                                                                       |
+| [`claude-md-manager`](./claude-md-manager/SKILL.md)                                   | `AGENTS.md` / `CLAUDE.md` をモジュール化して分割管理するスキル。本体は50行以下を推奨し、詳細ルールは `rules/` ディレクトリに切り出して参照リンクのみ残す。実体を `AGENTS.md` に置き `CLAUDE.md` はシンボリックリンクにすることで、Claude Code・Codex など複数AIエージェント間で指示を共通化する。 |
 
 ## セットアップ手順
 
@@ -92,6 +93,26 @@ Claude Code や Cursor などのAIコーディングツールは、`.env` ファ
 .env
 .env.*
 !.env.sample
+```
+
+### claude-md-manager
+
+`AGENTS.md` / `CLAUDE.md` の肥大化を防ぐため、本体ファイルは **50行以下を推奨**（公式は200行以下）しています。それを超える詳細なルールや手順は `rules/` ディレクトリ配下に個別のMarkdownファイルとして切り出し、本体には `-` パス`— 目的` の1行だけを残す運用です。
+
+```text
+.
+├── AGENTS.md            # 50行以下。パスと目的の参照のみ
+├── CLAUDE.md -> AGENTS.md  # シンボリックリンク
+└── rules/
+    ├── writing_rules.md
+    ├── post_patterns.md
+    └── ...
+```
+
+`CLAUDE.md` は `AGENTS.md` へのシンボリックリンクとして作成します。これにより Claude Code・Codex など複数のAIエージェントが同じ指示内容を共通で参照できます。
+
+```bash
+ln -s AGENTS.md CLAUDE.md
 ```
 
 ### image-compressor
