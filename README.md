@@ -28,6 +28,7 @@ npx skills update hukusuke1007/agent-skills
 | [`nano-banana-image-gen`](./nano-banana-image-gen/SKILL.md)                           | Google Gemini で画像を生成し、タイムスタンプ付きPNGを `0_images/generated/` に出力する。Gemini APIキーが必要。                                                                                                                                                                                    |
 | [`image-compressor`](./image-compressor/SKILL.md)                                     | 複数の画像を Pillow で一括圧縮・リサイズする。デフォルトは長辺1920pxで、元のファイル名を維持（同名が存在する場合は自動で連番付与）。出力フォーマット（JPG/PNG）を指定可能。                                                                                                                       |
 | [`claude-md-manager`](./claude-md-manager/SKILL.md)                                   | `AGENTS.md` / `CLAUDE.md` をモジュール化して分割管理するスキル。本体は50行以下を推奨し、詳細ルールは `rules/` ディレクトリに切り出して参照リンクのみ残す。実体を `AGENTS.md` に置き `CLAUDE.md` はシンボリックリンクにすることで、Claude Code・Codex など複数AIエージェント間で指示を共通化する。 |
+| [`design-md-generator`](./design-md-generator/SKILL.md)                               | URL・画像・テキスト要件から AI コーディングエージェント向けの `DESIGN.md`（getdesign.md / awesome-design-md 準拠の9セクション構成）を生成する。CSS解析・画像目視抽出・要件生成の3パターンに対応し、Claude Code / Cursor / Stitch / v0 にそのまま渡せる。                                          |
 
 ## セットアップ手順
 
@@ -128,6 +129,22 @@ IMAGE_COMPRESS_OUTPUT_PATH=0_images/compressed
 ```bash
 pip install pillow python-dotenv
 ```
+
+### design-md-generator
+
+URL モード（CSS解析）を使う場合のみ依存パッケージが必要です。画像モード・テキスト要件モードは Claude 側で完結するため、追加インストール不要です。
+
+```bash
+pip install requests
+```
+
+使い方は3パターン:
+
+- URL: 「<https://example.com/> を DESIGN.md にして」
+- 画像: サムネ・スクショを添付して「これを DESIGN.md 化して」
+- テキスト: 「クールでポップな LP 用の DESIGN.md を作って」
+
+出力例は [`design-md-generator/references/examples/neverjp_inc.md`](./design-md-generator/references/examples/neverjp_inc.md) を参照してください。
 
 ## 参考リンク
 
