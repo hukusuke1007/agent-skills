@@ -29,6 +29,7 @@ npx skills update hukusuke1007/agent-skills
 | [`image-compressor`](./image-compressor/SKILL.md)                                     | 複数の画像を Pillow で一括圧縮・リサイズする。デフォルトは長辺1920pxで、元のファイル名を維持（同名が存在する場合は自動で連番付与）。出力フォーマット（JPG/PNG）を指定可能。                                                                                                                       |
 | [`claude-md-manager`](./claude-md-manager/SKILL.md)                                   | `AGENTS.md` / `CLAUDE.md` をモジュール化して分割管理するスキル。本体は50行以下を推奨し、詳細ルールは `rules/` ディレクトリに切り出して参照リンクのみ残す。実体を `AGENTS.md` に置き `CLAUDE.md` はシンボリックリンクにすることで、Claude Code・Codex など複数AIエージェント間で指示を共通化する。 |
 | [`design-md-generator`](./design-md-generator/SKILL.md)                               | URL・画像・テキスト要件から AI コーディングエージェント向けの `DESIGN.md`（getdesign.md / awesome-design-md 準拠の9セクション構成）を生成する。CSS解析・画像目視抽出・要件生成の3パターンに対応し、Claude Code / Cursor / Stitch / v0 にそのまま渡せる。                                          |
+| [`media-transcriber`](./media-transcriber/SKILL.md)                                   | 動画/音声ファイルを OpenAI Whisper（ローカル）でタイムスタンプ付きに文字起こしし、要約mdを別ファイルで書き出す。モデルは `turbo`（large-v3-turbo）がデフォルトで日本語実用十分・高速。分割粒度は自然分割／N秒ごと／文単位／単語ごとから選択可。mp3・mp4・mov・wav等に対応（内部でffmpegが動画から音声抽出）。                                    |
 
 ## セットアップ手順
 
@@ -129,6 +130,39 @@ IMAGE_COMPRESS_OUTPUT_PATH=0_images/compressed
 ```bash
 pip install pillow python-dotenv
 ```
+
+### media-transcriber
+
+OpenAI Whisper（ローカル）とffmpegが必要です。
+
+```bash
+pip install -U openai-whisper python-dotenv
+brew install ffmpeg  # macOS。Linuxは apt install ffmpeg
+```
+
+任意設定。出力先ディレクトリをカスタマイズしたい場合は、プロジェクトルートの `.env` に以下を追加します（デフォルトはプロジェクトルート直下）:
+
+```text
+# 例: transcripts/ 配下に出したい場合
+TRANSCRIPT_OUTPUT_PATH=transcripts
+```
+
+初回実行時は選択したモデルが `~/.cache/whisper/` にダウンロードされます。`turbo` は約1.5GB、`large-v3` は約3GB。API不要・完全ローカル動作・APIキー不要。
+
+使い方:
+
+```bash
+# デフォルト（Whisper自然分割、turboモデル）
+python .claude/skills/media-transcriber/scripts/transcribe.py "meeting.mp4" --language ja
+
+# N秒ごとに区切る
+python .claude/skills/media-transcriber/scripts/transcribe.py "interview.mp3" --language ja --segment-seconds 5
+
+# 文（センテンス）単位で区切る
+python .claude/skills/media-transcriber/scripts/transcribe.py "interview.mp3" --language ja --sentence
+```
+
+全文md（タイムスタンプ付き）が出力されたあと、Claude自身が内容を読んで要約mdを別ファイルで書き出します。
 
 ### design-md-generator
 
