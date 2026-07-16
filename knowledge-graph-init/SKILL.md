@@ -3,7 +3,7 @@ name: knowledge-graph-init
 description: "アーキテクチャ知識グラフ(memory MCP / .claude/memory.jsonl)の初期作成。「知識グラフを初期化して」「memory グラフを作って」「アーキテクチャグラフを登録して」といった依頼、またはプロジェクト初期構築完了後の仕上げとして使用する。コードベースを調査し、モジュール構成と依存関係を entities / relations として登録する。"
 license: MIT
 author: shohei
-version: 1.1.0
+version: 1.2.0
 ---
 
 # knowledge-graph-init
@@ -24,6 +24,16 @@ AGENTS.md の運用ルールに従い、memory MCP（server-memory、保存先 `
    - relation の例: `depends on`, `contains`, `injects`, `configures`, `deploys`
    - observations には「何をするか」だけでなく、構成上の注意点（ビルド設定の例外、環境・モック切替の仕組み等）と調査日付を含める。
 4. **検証**: `read_graph` で登録結果を確認し、主要モジュールの登録漏れがないかコードのディレクトリ一覧と突き合わせる。
+5. **運用ルール追記**: `AGENTS.md`（または `CLAUDE.md`）に以下のセクションがなければ追加する。既に同等のルールがある場合は重複して追加しない。
+
+   ```markdown
+   ## アーキテクチャ知識グラフ
+
+   モジュール構成・依存関係の知識グラフを memory MCP(server-memory、保存先 `.claude/memory.jsonl`)で管理している。
+
+   - 実装・調査の前に `search_nodes` や `open_nodes` で関係するモジュールの entities / relations を参照し、既存の構成・依存関係に沿って作業すること(全体像が必要なら `read_graph`)。
+   - モジュールの追加・削除や依存関係の変更を行ったら、`create_entities` / `create_relations` / `add_observations` 等でグラフも更新すること。
+   ```
 
 ## 注意
 

@@ -31,7 +31,7 @@ npx skills update hukusuke1007/agent-skills
 | [`design-md-generator`](./design-md-generator/SKILL.md)                               | URL・画像・テキスト要件から AI コーディングエージェント向けの `DESIGN.md`（getdesign.md / awesome-design-md 準拠の9セクション構成）を生成する。CSS解析・画像目視抽出・要件生成の3パターンに対応し、Claude Code / Cursor / Stitch / v0 にそのまま渡せる。                                                                                     |
 | [`media-transcriber`](./media-transcriber/SKILL.md)                                   | 動画/音声ファイルを OpenAI Whisper（ローカル）でタイムスタンプ付きに文字起こしし、要約mdを別ファイルで書き出す。モデルは `turbo`（large-v3-turbo）がデフォルトで日本語実用十分・高速。分割粒度は自然分割／N秒ごと／文単位／単語ごとから選択可。mp3・mp4・mov・wav等に対応（内部でffmpegが動画から音声抽出）。                                |
 | [`codebase-onboarding`](./codebase-onboarding/SKILL.md)                               | 言語・フレームワーク非依存で、任意のコードベースを体系的に分析し、成果物を `docs/` 配下に分割出力する。C4図・依存グラフ・ドメインモデル・機能インベントリ・ユーザー操作フロー追跡（実コードの `ファイル:行` を根拠付きで提示）・技術的負債インベントリ・新機能実装ガイド・オンボーディングガイドを生成し、新規開発者の立ち上がりを加速する。 |
-| [`knowledge-graph-init`](./knowledge-graph-init/SKILL.md)                             | memory MCP（server-memory、保存先 `.claude/memory.jsonl`）にアーキテクチャ知識グラフを初期作成する。コードベースを調査し、モジュール構成と依存関係を entities / relations として登録する。「知識グラフを初期化して」といった依頼やプロジェクト初期構築の仕上げに使用。事前に server-memory MCP のセットアップが必要。                       |
+| [`knowledge-graph-init`](./knowledge-graph-init/SKILL.md)                             | memory MCP（server-memory、保存先 `.claude/memory.jsonl`）にアーキテクチャ知識グラフを初期作成する。コードベースを調査し、モジュール構成と依存関係を entities / relations として登録する。「知識グラフを初期化して」といった依頼やプロジェクト初期構築の仕上げに使用。事前に server-memory MCP のセットアップが必要。                        |
 
 ## セットアップ手順
 
