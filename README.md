@@ -32,6 +32,7 @@ npx skills update hukusuke1007/agent-skills
 | [`media-transcriber`](./media-transcriber/SKILL.md)                                   | 動画/音声ファイルを OpenAI Whisper（ローカル）でタイムスタンプ付きに文字起こしし、要約mdを別ファイルで書き出す。モデルは `turbo`（large-v3-turbo）がデフォルトで日本語実用十分・高速。分割粒度は自然分割／N秒ごと／文単位／単語ごとから選択可。mp3・mp4・mov・wav等に対応（内部でffmpegが動画から音声抽出）。                                |
 | [`codebase-onboarding`](./codebase-onboarding/SKILL.md)                               | 言語・フレームワーク非依存で、任意のコードベースを体系的に分析し、成果物を `docs/` 配下に分割出力する。C4図・依存グラフ・ドメインモデル・機能インベントリ・ユーザー操作フロー追跡（実コードの `ファイル:行` を根拠付きで提示）・技術的負債インベントリ・新機能実装ガイド・オンボーディングガイドを生成し、新規開発者の立ち上がりを加速する。 |
 | [`knowledge-graph-init`](./knowledge-graph-init/SKILL.md)                             | memory MCP（server-memory、保存先 `memory.jsonl`）にアーキテクチャ知識グラフを初期作成する。コードベースを調査し、モジュール構成と依存関係を entities / relations として登録する。「知識グラフを初期化して」といった依頼やプロジェクト初期構築の仕上げに使用。事前に server-memory MCP のセットアップが必要。                                |
+| [`coding-rules`](./coding-rules/SKILL.md)                                             | AIコーディングエージェント向けの共通コーディングルール。実装・修正・リファクタリング・レビュー時に、前提確認、最小限の変更、検証に加え、意味のまとまりごとの空行、目的と理由のコメント、動詞＋目的語の命名によって、人間が後から読んで理解できるコードを保つ。                                                                               |
 
 ## セットアップ手順
 
