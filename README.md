@@ -33,6 +33,7 @@ npx skills update hukusuke1007/agent-skills
 | [`codebase-onboarding`](./codebase-onboarding/SKILL.md)                               | 言語・フレームワーク非依存で、任意のコードベースを体系的に分析し、成果物を `docs/` 配下に分割出力する。C4図・依存グラフ・ドメインモデル・機能インベントリ・ユーザー操作フロー追跡（実コードの `ファイル:行` を根拠付きで提示）・技術的負債インベントリ・新機能実装ガイド・オンボーディングガイドを生成し、新規開発者の立ち上がりを加速する。 |
 | [`knowledge-graph-init`](./knowledge-graph-init/SKILL.md)                             | memory MCP（server-memory、保存先 `memory.jsonl`）にアーキテクチャ知識グラフを初期作成する。コードベースを調査し、モジュール構成と依存関係を entities / relations として登録する。「知識グラフを初期化して」といった依頼やプロジェクト初期構築の仕上げに使用。事前に server-memory MCP のセットアップが必要。                                |
 | [`coding-rules`](./coding-rules/SKILL.md)                                             | AIコーディングエージェント向けの共通コーディングルール。実装・修正・リファクタリング・レビュー時に、前提確認、最小限の変更、検証に加え、意味のまとまりごとの空行と動詞＋目的語の命名によって、コメントに頼らず人間が後から読んで理解できるコードを保つ。コメントは原則書かない。                                                                               |
+| [`pr-review`](./pr-review/SKILL.md) | GitHubのPRとGitLabのMRをレビューし、背景、対応前後のシーケンス図、デグレード・セキュリティ・パフォーマンス・スケーラビリティ・マイグレーション・テストの6観点の確認結果、コメント案を `tasks/reviews/` に作成する。規模、CI、マイグレーションの信号を集めるスクリプト付き。大きなPRは領域ごとにレビューエージェントへ分ける。投稿は指示があるまで行わない。`gh` が必要（GitLabは `git` と、GitLabのMCPか `glab`）。 |
 
 ## セットアップ手順
 
